@@ -2,6 +2,7 @@ package com.mycompany.bzapr_cv09_statistika;
 
 import static java.lang.Double.NaN;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Statistika {
     private int pole[];
@@ -33,33 +34,68 @@ public class Statistika {
         return NaN;
     }
     
+    //ukol:
+    private boolean zkontrolujIndex(int index){
+        if (index >= 0 && index < pole.length){
+            return true;
+        }
+        else{
+            throw new IndexOutOfBoundsException(
+                "Neplatny index: " + index
+            );
+        }
+    }
+    
     public void nahradPrvek(int index, int novaHodnotaPrvku){
-        //kontrola
+        zkontrolujIndex(index);
+           
+        pole[index] = novaHodnotaPrvku;
     }
     
     public void vypisPrvek(int index){
+        zkontrolujIndex(index);
         
+        System.out.println("prvek na indexu: " + index + " = " + pole[index]);
     }
     
     public void vypisPrvek(int indexOd, int indexDo){
-    
+        if (indexOd > indexDo) {
+            throw new IllegalArgumentException("Spatne zadany rozsah indexu.");
+        }
+        
+        int aktualniIndex = indexOd;
+        while (true){
+            zkontrolujIndex(aktualniIndex);
+            
+            System.out.println("prvek na indexu: " + aktualniIndex + " = " + pole[aktualniIndex]);
+            
+            aktualniIndex++;
+            if (aktualniIndex > indexDo)
+                return;
+        }
     }
     
     public void vypisPrvek(int[] poleIndexu){
-    
+        for(int i = 0; i < poleIndexu.length; i++){
+            zkontrolujIndex(poleIndexu[i]);
+            
+            System.out.println("prvek na indexu: " + poleIndexu[i] + " = " + pole[poleIndexu[i]]);
+        }
     }
     
-    public void smerodatnaOdchylka(){
-    
-    }
-    
+    /*
     public void preusporadejPole(){
-    
+        int[] novePole = new int[pole.length];
+        
+        Random random = new Random();
+        
+        for (int i = 0; i < pole.length; i++){
+            int index = random.nextInt(0, pole.length);
+            novePole[i] = pole[index]; 
+        }
     }
-    
-    public void serad(){
-    
-    }
+    */
+
 
     @Override
     public String toString() {
